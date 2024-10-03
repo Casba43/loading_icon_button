@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'enum.dart';
@@ -12,7 +13,7 @@ class LoadingButton extends StatefulWidget {
     this.height = 55,
     this.width = 225,
     this.child,
-    this.iconData,
+    required this.iconData,
     required this.onPressed,
     required this.controller,
     this.loaderSize = 50.0,
@@ -51,7 +52,7 @@ class LoadingButton extends StatefulWidget {
   final Widget? child;
 
   /// Icon for button
-  final IconData? iconData;
+  final String iconData;
 
   /// Icon color for button
   final Color? iconColor;
@@ -289,8 +290,8 @@ class LoadingButtonState extends State<LoadingButton>
               ),
             ),
             Center(
-              child: Icon(
-                widget.iconData,
+              child: SvgPicture.asset(
+                widget.iconData!,
                 color: _state.value == ButtonState.loading
                     ? widget.valueColor
                     : widget.iconColor,
@@ -311,15 +312,15 @@ class LoadingButtonState extends State<LoadingButton>
               : Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (widget.iconData != null)
-                      Icon(
-                        widget.iconData,
-                        color: widget.iconColor,
-                      ),
-                    if (widget.iconData != null && widget.child != null)
-                      SizedBox(
-                        width: widget.spaceBetween,
-                      ),
+                    // if (widget.iconData != null)
+                    //   SvgPicture.asset(
+                    //     widget.iconData!,
+                    //     color: widget.iconColor,
+                    //   ),
+                    // if (widget.iconData != null && widget.child != null)
+                    //   SizedBox(
+                    //     width: widget.spaceBetween,
+                    //   ),
                     widget.child ?? const SizedBox(),
                   ],
                 ),

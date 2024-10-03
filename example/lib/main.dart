@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                           });
                         },
                         successIcon: PhosphorIcons.check,
-                        controller: _btnController1,
+                        controller: _btnController1, iconData: '',
                       ),
                     ),
                   ],
@@ -105,7 +105,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                       child: LoadingButton(
                         showBox: show,
                         child: const Text('Login with Ios'),
-                        iconData: PhosphorIcons.appleLogo,
+                        iconData: '',
                         onPressed: () {
                           Future.delayed(const Duration(seconds: 2), () {
                             _btnController3.success();
@@ -145,7 +145,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                         valueColor: const Color(0xff0066ff),
                         errorColor: const Color(0xffe0333c),
                         successColor: const Color(0xff58B09C),
-                        iconData: PhosphorIcons.magnifyingGlass,
+                        iconData: '',
                         onPressed: () {
                           Future.delayed(const Duration(seconds: 1), () {
                             _btnController2.error();

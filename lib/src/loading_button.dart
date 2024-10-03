@@ -26,6 +26,7 @@ class LoadingButton extends StatefulWidget {
     this.primaryColor,
     this.errorColor = Colors.redAccent,
     this.successColor = Colors.green,
+    this.borderColor = Colors.transparent,
     this.shadowColor,
     this.valueColor,
     this.disabledColor,
@@ -59,6 +60,9 @@ class LoadingButton extends StatefulWidget {
 
   /// Primary color or the button
   final Color? primaryColor;
+
+  ///Border color for button
+  final Color? borderColor;
 
   /// Vertical extent of the button
   final double height;
@@ -269,7 +273,7 @@ class LoadingButtonState extends State<LoadingButton>
       height: widget.loaderSize,
       child: Container(
         decoration: BoxDecoration(
-          color: (widget.showBox) ? widget.primaryColor : Colors.transparent,
+          color: _state.value != ButtonState.loading ? widget.primaryColor : Colors.transparent,
           borderRadius: BorderRadius.circular(
               (widget.child != null) ? widget.borderRadius : 360),
         ),
@@ -291,11 +295,13 @@ class LoadingButtonState extends State<LoadingButton>
             ),
             Center(
               child: SvgPicture.asset(
-                widget.iconData!,
+                widget.iconData,
                 color: _state.value == ButtonState.loading
                     ? widget.valueColor
                     : widget.iconColor,
+                width: widget.loaderSize -20,
               ),
+
             ),
           ],
         ),
@@ -312,15 +318,6 @@ class LoadingButtonState extends State<LoadingButton>
               : Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // if (widget.iconData != null)
-                    //   SvgPicture.asset(
-                    //     widget.iconData!,
-                    //     color: widget.iconColor,
-                    //   ),
-                    // if (widget.iconData != null && widget.child != null)
-                    //   SizedBox(
-                    //     width: widget.spaceBetween,
-                    //   ),
                     widget.child ?? const SizedBox(),
                   ],
                 ),
@@ -341,16 +338,18 @@ class LoadingButtonState extends State<LoadingButton>
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(
                 (widget.child != null) ? widget.borderRadius : 360),
+            side: BorderSide(
+              color: widget.borderColor ?? Colors.transparent,  // Add border color
+              width: 2.0, // Adjust width of the border as needed
+            ),
           ),
+
           backgroundColor:
-              (widget.showBox) ? widget.primaryColor : Colors.transparent,
-          elevation: (widget.showBox) ? widget.elevation : 0,
-          shadowColor: (widget.showBox || kIsWeb)
-              ? widget.shadowColor
-              : Colors.transparent,
-          foregroundColor: (widget.showBox)
-              ? theme.colorScheme.onPrimary
-              : theme.primaryColor,
+          _state.value != ButtonState.loading ? widget.primaryColor : Colors.transparent,
+          elevation:  0,
+          shadowColor:  Colors.transparent,
+          foregroundColor: _state.value != ButtonState.loading
+     ? widget.primaryColor : Colors.transparent,
           padding: const EdgeInsets.all(0),
         ),
         onPressed: widget.onPressed == null ? null : _btnPressed,
